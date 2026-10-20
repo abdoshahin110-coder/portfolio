@@ -1,0 +1,419 @@
+/* =========================================================
+   style.css — تنسيقات موقع الـ Portfolio
+   الفكرة: ورق رسم هندسي (شبكة خفيفة) + حبر أزرق داكن
+   + لون أخضر مزرق للأزرار + أصفر "قلم تحديد" للتأكيد فقط
+   ========================================================= */
+
+/* ---------- 1) متغيرات الألوان والخطوط (غيّرها من هنا) ---------- */
+:root {
+  --ink: #14213D;        /* لون النص والعناوين */
+  --ink-soft: #4B5568;   /* نص ثانوي */
+  --paper: #F4F6F8;      /* خلفية الصفحة */
+  --surface: #FFFFFF;    /* خلفية البطاقات */
+  --line: #D9E0E8;       /* الحدود والفواصل */
+  --teal: #0F766E;       /* اللون الأساسي للأزرار والروابط */
+  --teal-dark: #0B5A54;
+  --marker: #F2C230;     /* لون قلم التحديد */
+  --code-bg: #14213D;
+
+  --font-display: "Reem Kufi", "IBM Plex Sans Arabic", Tahoma, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-code: "JetBrains Mono", Consolas, monospace;
+
+  --nav-h: 72px;
+}
+
+/* ---------- 2) أساسيات عامة ---------- */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* حتى لا يختفي عنوان القسم خلف الـ Navbar الثابت عند الانتقال إليه */
+section, header { scroll-margin-top: var(--nav-h); }
+
+h1, h2, h3 { font-family: var(--font-display); color: var(--ink); }
+
+a { color: var(--teal); }
+a:hover { color: var(--teal-dark); }
+
+/* إطار واضح عند التنقل بلوحة المفاتيح */
+:focus-visible {
+  outline: 3px solid var(--marker);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  right: 1rem;
+  z-index: 2000;
+  background: var(--ink);
+  color: #fff;
+  padding: .5rem 1rem;
+  border-radius: 6px;
+}
+.skip-link:focus { top: 1rem; color: #fff; }
+
+/* ---------- 3) شريط التنقل ---------- */
+.site-nav {
+  min-height: var(--nav-h);
+  background: rgba(244, 246, 248, .92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, box-shadow .2s;
+}
+/* يضيف js/main.js هذا الكلاس عند التمرير للأسفل */
+.site-nav.scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: 0 4px 18px rgba(20, 33, 61, .06);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--ink);
+}
+.brand:hover { color: var(--teal); }
+
+.site-nav .nav-link {
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: .5rem .9rem !important;
+}
+.site-nav .nav-link:hover,
+.site-nav .nav-link.active { color: var(--ink); }
+
+/* خط أصفر تحت رابط القسم الحالي */
+.site-nav .nav-link.active:not(.nav-cta) {
+  background: linear-gradient(transparent 62%, var(--marker) 62%, var(--marker) 88%, transparent 88%);
+}
+
+.nav-cta {
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  margin-inline-start: .5rem;
+}
+.nav-cta:hover, .nav-cta.active { background: var(--ink); color: #fff !important; }
+
+/* ---------- 4) الأزرار ---------- */
+.btn-main {
+  background: var(--teal);
+  color: #fff;
+  border: 2px solid var(--teal);
+  border-radius: 10px;
+  font-weight: 700;
+  transition: transform .15s, background-color .15s;
+}
+.btn-main:hover { background: var(--teal-dark); border-color: var(--teal-dark); color: #fff; transform: translateY(-2px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font-weight: 700;
+  transition: transform .15s, background-color .15s, color .15s;
+}
+.btn-ghost:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
+
+/* ---------- 5) القسم الرئيسي Hero ---------- */
+.hero {
+  padding: calc(var(--nav-h) + 4rem) 0 5rem;
+  /* شبكة ورق الرسم الهندسي */
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center top;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-role {
+  display: block;
+  width: fit-content;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: .25rem .9rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+/* اسم الطالب: العنصر الأبرز في الصفحة */
+.hero-name {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  /* تظليل أصفر خلف الجزء السفلي من الاسم مثل قلم التحديد */
+  display: inline;
+  background: linear-gradient(transparent 68%, var(--marker) 68%, var(--marker) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.hero-name + .hero-lead { margin-top: 1.5rem; }
+
+.hero-lead {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  max-width: 34em;
+  margin-bottom: 2rem;
+}
+
+/* بطاقة الكود */
+.code-card {
+  position: relative;
+  background: var(--code-bg);
+  border-radius: 14px;
+  padding-top: 3.5rem;
+  box-shadow: 10px 10px 0 var(--teal);   /* ظل مُزاح بدل الظل الضبابي */
+  margin-top: 3rem;
+}
+.profile-photo {
+  position: absolute;
+  top: -60px;
+  left: 1.5rem;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid var(--paper);
+  background: var(--line);
+}
+.code-bar {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.code-bar span { width: 11px; height: 11px; border-radius: 50%; background: #3A4A6B; }
+.code-bar em { font-style: normal; font-family: var(--font-code); font-size: .8rem; color: #8B9AB8; margin-inline-start: .6rem; }
+
+.code-body {
+  margin: 0;
+  padding: 0 1.5rem 1.75rem;
+  color: #E6ECF5;
+  font-family: var(--font-code);
+  font-size: .9rem;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-align: left;
+}
+.code-body .k { color: #7DD3C0; }
+.code-body .s { color: var(--marker); }
+
+/* ---------- 6) الأقسام العامة ---------- */
+.section { padding: 6rem 0; }
+.section-alt { background: var(--surface); border-block: 1px solid var(--line); }
+
+.section-title {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.section-note { color: var(--ink-soft); max-width: 22em; }
+
+.lead-text { font-size: 1.2rem; max-width: 38em; }
+
+/* نبذة عني: الأهداف */
+.goal {
+  height: 100%;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.goal i { font-size: 1.6rem; color: var(--teal); }
+.goal h3 { font-size: 1.2rem; margin: .75rem 0 .5rem; }
+.goal p { margin: 0; color: var(--ink-soft); }
+
+/* ---------- 7) السيرة الذاتية: خط زمني ---------- */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-inline-start: 2px solid var(--line);
+}
+.timeline-item {
+  position: relative;
+  padding: 0 2rem 2.5rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {          /* النقطة على الخط */
+  content: "";
+  position: absolute;
+  top: .55rem;
+  inset-inline-start: -8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--teal);
+}
+.timeline-type {
+  display: inline-block;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: .25rem;
+}
+.timeline-item h3 { font-size: 1.3rem; margin-bottom: .25rem; }
+.timeline-meta { color: var(--ink-soft); font-weight: 500; margin-bottom: .5rem; }
+.timeline-item p:last-child { margin-bottom: 0; }
+
+/* ---------- 8) المهارات ---------- */
+.skill-group { font-size: 1.15rem; margin: 0 0 1rem; }
+.skill-group:not(:first-child) { margin-top: 2.5rem; }
+
+.skill {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-weight: 700;
+}
+.skill i { font-size: 1.6rem; color: var(--teal); }
+/* مربعات المهارات الفارغة تظهر بحد متقطع حتى تتذكر تعبئتها */
+.skill-empty { border-style: dashed; color: var(--ink-soft); background: transparent; }
+.skill-empty i { color: var(--ink-soft); }
+
+/* ---------- 9) بطاقات المشاريع ---------- */
+.project {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.project:hover {
+  transform: translateY(-6px);
+  border-color: var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.project-shot {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  background: var(--teal);
+  color: rgba(255, 255, 255, .85);
+  font-size: 3rem;
+}
+.project-shot.shot-2 { background: var(--ink); }
+.project-shot.shot-3 { background: #3B5B8C; }
+
+.project-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+.project-body h3 { font-size: 1.25rem; margin-bottom: .5rem; }
+.project-body p { color: var(--ink-soft); }
+
+.tags { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+.tags li {
+  font-size: .8rem;
+  font-weight: 500;
+  padding: .15rem .65rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.project-link {
+  margin-top: auto;               /* يدفع الرابط لأسفل البطاقة */
+  align-self: flex-start;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+.project-link:hover { text-decoration: underline; }
+
+/* ---------- 10) التواصل ---------- */
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  height: 100%;
+  padding: 1.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .15s, border-color .15s;
+}
+.contact-item:hover { color: var(--ink); border-color: var(--teal); transform: translateY(-3px); }
+.contact-item i { font-size: 1.8rem; color: var(--teal); margin-bottom: .25rem; }
+.contact-label { font-weight: 700; }
+.contact-value { color: var(--ink-soft); font-size: .92rem; word-break: break-all; }
+
+/* ---------- 11) Footer ---------- */
+.site-footer {
+  background: var(--ink);
+  color: #C9D2E3;
+  padding: 2rem 0;
+  font-size: .95rem;
+}
+.footer-links { list-style: none; display: flex; gap: .5rem; margin: 0; padding: 0; }
+.footer-links a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  border: 1px solid #3A4A6B;
+  text-decoration: none;
+  transition: background-color .15s, border-color .15s;
+}
+.footer-links a:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+/* ---------- 12) الاستجابة للشاشات الصغيرة ---------- */
+@media (max-width: 991.98px) {
+  .site-nav .navbar-collapse {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: .75rem;
+    margin-top: .5rem;
+  }
+  .nav-cta { margin: .5rem 0 0; text-align: center; }
+  .section { padding: 4.5rem 0; }
+  .code-card { margin-top: 4.5rem; }
+}
+
+@media (max-width: 575.98px) {
+  .hero { padding-top: calc(var(--nav-h) + 2.5rem); padding-bottom: 3.5rem; }
+  .hero-lead, .lead-text { font-size: 1.08rem; }
+  .hero .btn-lg { width: 100%; }
+  .code-body { font-size: .8rem; padding-inline: 1rem; }
+  .timeline-item { padding-inline-end: 0; padding-inline-start: 1.5rem; }
+}
+
+/* احترام إعداد "تقليل الحركة" في نظام التشغيل */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
